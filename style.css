@@ -148,6 +148,7 @@ body {
     height: 50%;
     width: 100%;
     box-shadow: -7px -3px 5px rgba(0, 0, 0, 0.452);
+   
 }
 
 .card h3 {
@@ -188,7 +189,7 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  margin-top: auto;
+    margin-top: auto;
 }
 
 .social {
@@ -218,6 +219,7 @@ footer {
     flex-direction: column;
     flex-wrap: wrap;
     align-items: center;
+    height: 100vh;
 }
 
 .form {
@@ -240,4 +242,56 @@ footer {
 
 .textarea {
     width: 100%;
+}
+
+
+/* -------DETAILS PAGE------- */
+.details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 3rem;
+    margin-top: 13vh;
+}
+
+.eventDetails {
+    border: 3px solid red;
+    height: 25rem;
+    width: 60rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    gap: 2rem;
+}
+
+.image {
+    box-shadow: -10px -5px 10px rgba(0, 0, 0, 0.452);
+
+}
+
+.image,
+.fullDetails {
+    border: 2px solid black;
+    width: 50%;
+    height: 100%;
+
+}
+
+.image img {
+    height: 100%;
+    width: 100%;
+}
+
+.fullDetails {
+    background-color: #FFF6C3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.fullDetails h3 {
+    margin-bottom: 3rem;
 }
