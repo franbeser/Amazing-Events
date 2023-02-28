@@ -295,3 +295,35 @@ footer {
 .fullDetails h3 {
     margin-bottom: 3rem;
 }
+
+
+.stats {
+    
+    height: 100%;
+    width: 100%;
+}
+
+
+
+.table {
+ height: 100%;
+ width: 100%;
+ padding: 1rem 3rem 1rem 3rem;
+}
+
+table, td, th {
+    border: 1px solid #DC0000;
+}
+
+th {
+    height: 3rem;
+    font-size: large;
+    font-weight: bold;
+    background-color: #FFF6C3;
+}
+
+.statistics {
+    width: 100%;
+}
+
+
