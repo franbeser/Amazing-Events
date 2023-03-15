@@ -30,3 +30,21 @@ let containerContent = cardsElement.innerHTML = cardTemplate
 
 
 
+
+const categories = []
+
+for (let i = 0; i < events.length; i++) {
+    categories.push(events[i].category)
+    
+}
+
+const uniqueCategories = []
+
+    categories.forEach((item)=>{
+
+        if(!uniqueCategories.includes(item)){
+    		uniqueCategories.push(item);
+    	}
+    })
+
+
