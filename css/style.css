@@ -93,7 +93,7 @@ body {
 }
 
 .filters input {
-    margin-right: 1rem;
+    margin-right: 5px;
 }
 
 .checkbox {
@@ -103,11 +103,11 @@ body {
 }
 
 .search {
-    margin-right: 3rem;
+    margin-right: 6rem;
 }
 
 .search input {
-    width: 20rem;
+    width: 17rem;
 }
 
 .search label {
@@ -118,11 +118,11 @@ body {
 }
 
 .checkbox input {
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .checkbox label {
-    margin-right: 2rem;
+    margin-right: 1rem;
 }
 
 /* -------CARDS-------- */
