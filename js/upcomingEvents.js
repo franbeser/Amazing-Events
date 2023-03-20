@@ -2,130 +2,122 @@ fetch('https://mindhub-xj03.onrender.com/api/amazing')
     .then((res) => res.json())
     .then((data) => {
 
+        //VARIABLES
         let events = data.events;
-
+        let input = document.getElementById('searchInput')
+        let checkboxesContainer = document.getElementById('filters')
         let upcomingEvents = []
+
+        // DATE FILTER
         for (let i = 0; i < events.length; i++) {
             if (events[i].date > data.currentDate) {
                 upcomingEvents.push(data.events[i])
             }
 
-            let cardTemplate = ""
-            for (let i = 0; i < upcomingEvents.length; i++) {
-                cardTemplate += `
-     <div class="card">
-                <img src="${upcomingEvents[i].image}" alt="${upcomingEvents[i].name}" class="imagenNormal">
-                <h3> ${upcomingEvents[i].name} </h3>
-                <p> ${upcomingEvents[i].date} </p>
-                <p> ${upcomingEvents[i].description} </p>
-    
-                <div class="cardFooter">
-                    <h4>Price:$ ${upcomingEvents[i].price} </h4>
-                    <button>See more</button>
-                </div>
+        //FUNCTION CALLS
+        paintCards(upcomingEvents);
+        paintCheckboxes(upcomingEvents);
+        categoryFilter(upcomingEvents);
+
+        //SEARCH BY TEXT
+        input.addEventListener('input', () => {
+            let filteredArray = textFilter(upcomingEvents, input.value)
+            let filteredArray2 = categoryFilter(filteredArray)
+            paintCards(filteredArray2)
+        })
+
+        //SEARCH BY CHECKBOXES
+        checkboxesContainer.addEventListener('change', () => {
+            let filteredArray = textFilter(upcomingEvents, input.value)
+            let filteredArray2 = categoryFilter(filteredArray)
+            paintCards(filteredArray2)
+        })
+
+    }})
+
+    //FUNCTIONS
+
+function paintCards(dataArray) {
+    if (dataArray.length == 0) {
+        cardsContainer.innerHTML = "<h3>No results for your search!</h3>"
+        return
+    }
+    let cardTemplate = ""
+    for (let i = 0; i < dataArray.length; i++) {
+        cardTemplate += `
+ <div class="card">
+            <img src="${dataArray[i].image}" alt="${dataArray[i].name}" class="imagenNormal">
+            <h3> ${dataArray[i].name} </h3>
+            <p> ${dataArray[i].date} </p>
+            <p> ${dataArray[i].description} </p>
+
+            <div class="cardFooter">
+                <h4>Price:$ ${dataArray[i].price} </h4>
+                <button>See more</button>
             </div>
-     `
-            }
-            let cardsElement = document.getElementById("cardsContainer")
+        </div>
+ `
+    }
+    let cardsElement = document.getElementById("cardsContainer")
 
-            let containerContent = cardsElement.innerHTML = cardTemplate
+    cardsElement.innerHTML = cardTemplate
 
+}
 
-            let categories = []
-            for (let i = 0; i < events.length; i++) {
-                categories.push(events[i].category)
-            }
+function paintCheckboxes(dataArray) {
 
-            const uniqueCategories = []
+    let categories = []
 
-            categories.forEach((category) => {
+    for (let i = 0; i < dataArray.length; i++) {
+        categories.push(dataArray[i].category)
+    }
 
-                if (!uniqueCategories.includes(category)) {
-                    uniqueCategories.push(category);
-                }
-            })
+    const uniqueCategories = []
 
-            uniqueCategories.sort()
+    categories.forEach((category) => {
 
-            let filterCheckbox = ""
-            for (let i = 0; i < uniqueCategories.length; i++) {
-                filterCheckbox += `
-<input type="checkbox" id="${uniqueCategories[i]}" name="${uniqueCategories[i]}" value="${uniqueCategories[i]}">
+        if (!uniqueCategories.includes(category)) {
+            uniqueCategories.push(category);
+        }
+    })
+
+    uniqueCategories.sort((a, b) => {
+        if (a > b) {
+            return 1
+        }
+        if (a < b) {
+            return -1
+        }
+        return 0
+    })
+
+    let filterCheckbox = ""
+    for (let i = 0; i < uniqueCategories.length; i++) {
+        filterCheckbox += `
+<input type="checkbox" class="checkboxes" id="${uniqueCategories[i]}" value="${uniqueCategories[i]}">
             <label for="${uniqueCategories[i]}">${uniqueCategories[i]}</label>
 `
-            }
+    }
 
-            let checkboxElement = document.getElementById("filters")
+    let checkboxElement = document.getElementById("filters")
 
-            let filtersContent = checkboxElement.innerHTML = filterCheckbox
+    checkboxElement.innerHTML = filterCheckbox
 
- }})
+}
 
+function textFilter(dataArray, text) {
+    let filteredArray = dataArray.filter(element => element.name.toLowerCase().includes(text.toLowerCase()))
+    return filteredArray
+}
 
-
-// const events = []
-// const upcomingEvents = []
-
-// for (const name of data.events) {
-//     events.push(name)
-// }
-
-// for (let i = 0; i < events.length; i++) {
-//     if (events[i].date > data.currentDate) {
-//         upcomingEvents.push(data.events[i])
-//     }
-
-// }
-
-// let cardTemplate = ""
-// for (let i = 0; i < upcomingEvents.length; i++) {
-//     cardTemplate += `
-//  <div class="card">
-//             <img src="${upcomingEvents[i].image}" alt="${upcomingEvents[i].name}" class="imagenNormal">
-//             <h3> ${upcomingEvents[i].name} </h3>
-//             <p> ${upcomingEvents[i].date} </p>
-//             <p> ${upcomingEvents[i].description} </p>
-//             <div class="cardFooter">
-//                 <h4>Price:$ ${upcomingEvents[i].price} </h4>
-//                 <button>See more</button>
-//             </div>
-//         </div>
-//  `
-// }
-
-// let cardsElement = document.getElementById("cardsContainer")
-
-// let containerContent = cardsElement.innerHTML = cardTemplate
-
-
-// // CHECKBOXES
-
-// const categories = []
-
-// for (let i = 0; i < events.length; i++) {
-//     categories.push(events[i].category)
-
-// }
-
-// const uniqueCategories = []
-
-// categories.forEach((category) => {
-
-//     if (!uniqueCategories.includes(category)) {
-//         uniqueCategories.push(category);
-//     }
-// })
-
-// uniqueCategories.sort()
-
-// let filterCheckbox = ""
-// for (let i = 0; i < uniqueCategories.length; i++) {
-// filterCheckbox += `
-// <input type="checkbox" id="${uniqueCategories[i]}" name="${uniqueCategories[i]}" value="${uniqueCategories[i]}">
-//             <label for="${uniqueCategories[i]}">${uniqueCategories[i]}</label>
-// `
-// }
-
-// let checkboxElement = document.getElementById("filters")
-
-// let filtersContent = checkboxElement.innerHTML = filterCheckbox
+function categoryFilter(dataArray) {
+    let checkboxes = document.querySelectorAll("input[type='checkbox']")
+    let arrayChecks = Array.from(checkboxes)
+    let arrayCheckeds = arrayChecks.filter(checkbox => checkbox.checked)
+    if (arrayCheckeds.length == 0) {
+        return dataArray
+    }
+    let checkedValues = arrayCheckeds.map(checkbox => checkbox.value)
+    let arrayFilter = dataArray.filter(element => checkedValues.includes(element.category))
+    return arrayFilter
+}
