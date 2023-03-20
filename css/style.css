@@ -301,10 +301,11 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 1rem;
 }
 
 .fullDetails h3 {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 

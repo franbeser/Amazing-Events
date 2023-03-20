@@ -47,7 +47,7 @@ function paintCards(dataArray) {
 
             <div class="cardFooter">
                 <h4>Price:$ ${dataArray[i].price} </h4>
-                <button>See more</button>
+               <a href="./details.html?id=${dataArray[i]._id}"> <button>See more</button></a>
             </div>
         </div>
  `

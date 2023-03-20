@@ -53,9 +53,9 @@ function paintCards(dataArray) {
             <p> ${dataArray[i].description} </p>
 
             <div class="cardFooter">
-                <h4>Price:$ ${dataArray[i].price} </h4>
-                <button>See more</button>
-            </div>
+            <h4>Price:$ ${dataArray[i].price} </h4>
+           <a href="./details.html?id=${dataArray[i]._id}"> <button>See more</button></a>
+        </div>
         </div>
  `
     }
@@ -122,6 +122,8 @@ function categoryFilter(dataArray) {
     let arrayFilter = dataArray.filter(element => checkedValues.includes(element.category))
     return arrayFilter
 }
+
+
 
 
 
