@@ -12,7 +12,6 @@ fetch('https://mindhub-xj03.onrender.com/api/amazing')
         let detailsContainer = document.getElementById('detailedInfo')
 
         //CARD CREATION
-
         detailsContainer.innerHTML = `
 <div class="eventDetails">
         <div class="image">
