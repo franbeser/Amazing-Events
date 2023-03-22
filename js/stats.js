@@ -10,7 +10,6 @@ fetch('https://mindhub-xj03.onrender.com/api/amazing')
         let pastEventsData = []
         let upcomingEventsData = []
 
-        console.log(events);
 
         //DATE FILTERS
         for (let i = 0; i < events.length; i++) {
@@ -38,7 +37,7 @@ fetch('https://mindhub-xj03.onrender.com/api/amazing')
                 category: upcomingEvents[i].category,
                 capacity: upcomingEvents[i].capacity,
                 assistance: upcomingEvents[i].estimate,
-                percentaje: (upcomingEvents[i].estimate * 100) / upcomingEvents[i].capacity,
+                percentage: (upcomingEvents[i].estimate * 100) / upcomingEvents[i].capacity,
                 revenues: upcomingEvents[i].estimate * upcomingEvents[i].price
             })
         }
@@ -80,39 +79,74 @@ fetch('https://mindhub-xj03.onrender.com/api/amazing')
         let upcomingEventsStats = Object.values(categoriesUpc);
 
 
-        //CREATE TABLE
+        //CREATE TABLES
 
-        paintUpcStats(upcomingEventsStats);
-        paintPastStats(pastEventsStats);
+        paintStats(upcomingEventsStats, "upcTable");
+        paintStats(pastEventsStats, "pastTable");
+        paintRecords(events, pastEvents, "records")
 
     })
 
-function paintUpcStats(dataArray) {
+
+    //FUNCTIONS
+
+function paintStats(dataArray, containerID) {
     let tableTemplate = ""
     for (let i = 0; i < dataArray.length; i++) {
         tableTemplate += `
         <tr>
             <td>${dataArray[i].category}</td>
-            <td>${dataArray[i].revenues}</td>
+            <td>$${dataArray[i].revenues}</td>
             <td>${((dataArray[i].assistance * 100) / dataArray[i].capacity).toFixed(2)}%</td>
         </tr>
         `
     }
-    let upcomingContainer = document.getElementById("upcTable")
-    upcomingContainer.innerHTML = tableTemplate
+    let statsContainer = document.getElementById(containerID)
+    statsContainer.innerHTML = tableTemplate
 }
 
-function paintPastStats(dataArray) {
+function paintRecords(dataArray, dataArray2, containerID) {
+
+    //VARIABLES
+    let maxCap = 0;
+    let maxCapacityEvent = {};
+    let maxPct = 0;
+    let maxPercentageEvent = {};
+    let minPct = 100;
+    let minPercentageEvent = {};
+
+    //SEARCH
+    for (var i = 0; i < dataArray.length; i++) {
+        if (dataArray[i].capacity > maxCap) {
+            maxCap = dataArray[i].capacity;
+            maxCapacityEvent = dataArray[i];
+        }
+    }
+    for (var i = 0; i < dataArray2.length; i++) {
+        if ((((dataArray2[i].assistance) * 100) / dataArray2[i].capacity) < minPct) {
+            minPct = (((dataArray2[i].assistance) * 100) / dataArray2[i].capacity);
+            minPercentageEvent = dataArray2[i];
+        }
+    }
+    for (var i = 0; i < dataArray2.length; i++) {
+        if ((((dataArray2[i].assistance) * 100) / dataArray2[i].capacity) > maxPct) {
+            maxPct = (((dataArray2[i].assistance) * 100) / dataArray2[i].capacity);
+            maxPercentageEvent = dataArray2[i];
+        }
+    }
+
+    //CREATE TABLE
     let tableTemplate = ""
-    for (let i = 0; i < dataArray.length; i++) {
-        tableTemplate += `
+    tableTemplate += `
         <tr>
-            <td>${dataArray[i].category}</td>
-            <td>${dataArray[i].revenues}</td>
-            <td>${((dataArray[i].assistance * 100) / dataArray[i].capacity).toFixed(2)}%</td>
+            <td>${maxPercentageEvent.name} (${(((maxPercentageEvent.assistance) * 100) / maxPercentageEvent.capacity).toFixed(2)}%)</td>
+            <td>${minPercentageEvent.name} (${(((minPercentageEvent.assistance) * 100) / minPercentageEvent.capacity).toFixed(2)}%)</td>
+            <td>${maxCapacityEvent.name} (${maxCapacityEvent.capacity})</td>
         </tr>
         `
-    }
-    let upcomingContainer = document.getElementById("pastTable")
-    upcomingContainer.innerHTML = tableTemplate
+    let statsContainer = document.getElementById(containerID)
+    statsContainer.innerHTML = tableTemplate
 }
+
+
+

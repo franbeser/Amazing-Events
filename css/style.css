@@ -325,10 +325,16 @@ footer {
     padding: 1rem 3rem 1rem 3rem;
 }
 
+.table thead{
+    font-weight: bold;
+}
+
 table,
 td,
 th {
     border: 1px solid #DC0000;
+    table-layout: fixed;
+    text-align: center;
 }
 
 th {
@@ -336,6 +342,7 @@ th {
     font-size: large;
     font-weight: bold;
     background-color: #FFF6C3;
+    
 }
 
 .statistics {
